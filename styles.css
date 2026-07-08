@@ -63,7 +63,7 @@ header.top{
 .top nav a.current::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:1.5px;background:var(--petrol)}
 
 /* ---------------- hero (home) ---------------- */
-.hero{padding:76px 0 8px}
+.hero{padding:104px 0 8px}
 .hero .eyebrow{margin-bottom:22px}
 .hero h1{
   font-family:var(--display);font-weight:400;font-size:clamp(2.6rem,7vw,4.4rem);
@@ -77,7 +77,7 @@ header.top{
 .hero .tagline strong{font-weight:500;font-style:italic;color:var(--ink)}
 
 /* ---------------- interior page head ---------------- */
-.phead{padding:66px 0 8px}
+.phead{padding:96px 0 8px}
 .phead .eyebrow{margin-bottom:18px}
 .phead h1{
   font-family:var(--display);font-weight:400;font-size:clamp(2.1rem,5.2vw,3.2rem);
@@ -127,16 +127,16 @@ header.top{
 }
 
 /* ---------------- sections ---------------- */
-section{padding:54px 0}
+section{padding:96px 0}
 section.ruled{border-top:1px solid var(--line)}
-.sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:30px}
+.sec-head{margin-bottom:44px}
 .sec-head .idx{font-family:var(--mono);font-size:12px;color:var(--petrol-bright);letter-spacing:.08em;text-transform:uppercase}
-.sec-head h2{font-family:var(--display);font-weight:500;font-size:1.65rem;letter-spacing:-.02em}
+.sec-head h2{font-family:var(--display);font-weight:500;font-size:1.5rem;letter-spacing:-.02em;color:var(--ink)}
 .sec-head h2 em{font-style:italic;color:var(--petrol)}
 
 /* ---------------- area cards (home) ---------------- */
 .areas{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-left:1px solid var(--line)}
-.area{display:block;text-decoration:none;padding:26px 22px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--paper-2);transition:background .25s}
+.area{display:block;text-decoration:none;padding:34px 28px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--paper-2);transition:background .25s}
 .area:hover{background:var(--petrol-pale)}
 .area .k{font-family:var(--mono);font-size:11px;color:var(--petrol-bright);letter-spacing:.08em}
 .area h3{font-family:var(--display);font-weight:500;font-size:1.3rem;margin:12px 0 8px;letter-spacing:-.01em}
@@ -158,7 +158,7 @@ section.ruled{border-top:1px solid var(--line)}
 
 /* ---------------- work items ---------------- */
 .work{display:flex;flex-direction:column}
-.item{display:grid;grid-template-columns:1fr auto;gap:6px 24px;padding:24px 4px;border-top:1px solid var(--line);text-decoration:none;transition:padding-left .2s}
+.item{display:grid;grid-template-columns:1fr auto;gap:6px 24px;padding:32px 4px;border-top:1px solid var(--line);text-decoration:none;transition:padding-left .2s}
 .item:first-child{border-top:none}
 .item:hover{padding-left:12px}
 .item:hover .ttl{color:var(--petrol)}
@@ -192,7 +192,10 @@ section.ruled{border-top:1px solid var(--line)}
 .tag.key{border-color:var(--petrol);color:var(--petrol-deep);background:var(--petrol-pale)}
 
 /* ---------------- contact ---------------- */
-.contact{text-align:center;padding:72px 0 60px;border-top:1px solid var(--line)}
+.contact{text-align:center;padding:104px 0 88px;border-top:1px solid var(--line)}
+.contact.compact{padding:64px 0 56px}
+.contact.compact h2{font-size:1.5rem;margin-bottom:14px}
+.contact.compact .email{font-size:1.05rem}
 .contact .eyebrow{margin-bottom:16px}
 .contact h2{font-family:var(--display);font-weight:400;font-size:clamp(1.9rem,4.5vw,2.8rem);letter-spacing:-.025em;line-height:1.12;margin-bottom:20px}
 .contact h2 em{font-style:italic;color:var(--petrol)}
