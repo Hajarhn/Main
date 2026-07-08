@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Software — Hajar Hasannejadasl</title>
+<meta name="description" content="Browser-based research tooling and cross-platform mobile apps, built end to end.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a href="index.html" class="monogram">H.H.</a>
+    <nav>
+      <a href="index.html">home</a>
+      <a href="harmonization.html">harmonization</a>
+      <a href="data-science.html">data science</a>
+      <a href="software.html" class="current">software</a>
+      <a href="research.html">research</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="phead">
+    <div class="eyebrow reveal">Software</div>
+    <h1 class="reveal">Tools &amp; <em>apps</em></h1>
+    <p class="intro reveal">
+      I don't just analyse data — I build the things that handle it. When a spreadsheet stops being
+      enough or a workflow gets painful, I'd rather build the tool. Most of it is plain, reliable
+      web software with a small database; some of it is mobile. All of it is meant to be used.
+    </p>
+  </section>
+
+  <!-- flagship -->
+  <section class="ruled">
+    <div class="sec-head"><span class="idx">flagship</span><h2>Codebook <em>Editor &amp; Viewer</em></h2></div>
+    <div class="feature reveal">
+      <div class="shot">
+        <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect width="400" height="300" fill="#FBFAF5"/>
+          <rect x="0" y="0" width="400" height="42" fill="#0F5F66"/>
+          <text x="20" y="26" fill="#EAF3F1" font-family="Fraunces, Georgia, serif" font-size="13" font-style="italic">PCNN Codebook</text>
+          <circle cx="370" cy="21" r="3" fill="#B0803A"/>
+          <circle cx="358" cy="21" r="3" fill="#7FB0AC"/>
+          <circle cx="346" cy="21" r="3" fill="#7FB0AC"/>
+          <rect x="20" y="60" width="360" height="28" fill="#fff" stroke="#DAD6C9" rx="4"/>
+          <text x="30" y="78" fill="#878C82" font-family="IBM Plex Sans, sans-serif" font-size="10">Search variables…</text>
+          <text x="20" y="115" fill="#B0803A" font-family="IBM Plex Mono, monospace" font-size="9" letter-spacing="1">PROMIS FAMILY</text>
+          <g font-family="IBM Plex Sans, sans-serif" font-size="9.5" fill="#1B2321">
+            <rect x="20" y="125" width="360" height="22" fill="#E2ECEA"/>
+            <text x="30" y="139">PROMIS-29</text><text x="200" y="139" fill="#4C554F">29 variables</text><text x="330" y="139" fill="#0F5F66">view →</text>
+            <rect x="20" y="149" width="360" height="22" fill="#FBFAF5"/>
+            <text x="30" y="163">PROMIS SF Anxiety 4a</text><text x="200" y="163" fill="#4C554F">4 variables</text><text x="330" y="163" fill="#0F5F66">view →</text>
+            <rect x="20" y="173" width="360" height="22" fill="#E2ECEA"/>
+            <text x="30" y="187">PROMIS SF Depression 4a</text><text x="200" y="187" fill="#4C554F">4 variables</text><text x="330" y="187" fill="#0F5F66">view →</text>
+          </g>
+          <text x="20" y="220" fill="#B0803A" font-family="IBM Plex Mono, monospace" font-size="9" letter-spacing="1">DSQ-2 FAMILY</text>
+          <g font-family="IBM Plex Sans, sans-serif" font-size="9.5" fill="#1B2321">
+            <rect x="20" y="230" width="360" height="22" fill="#E2ECEA"/>
+            <text x="30" y="244">DSQ-2</text><text x="200" y="244" fill="#4C554F">159 variables</text><text x="330" y="244" fill="#0F5F66">view →</text>
+            <rect x="20" y="254" width="360" height="22" fill="#FBFAF5"/>
+            <text x="30" y="268">DSQ-PEM</text><text x="200" y="268" fill="#4C554F">15 variables</text><text x="330" y="268" fill="#0F5F66">view →</text>
+          </g>
+        </svg>
+      </div>
+      <div>
+        <div class="meta">2026 · Post-COVID Network NL</div>
+        <h3>A codebook tool researchers actually use</h3>
+        <p>
+          A browser-based system for editing and publishing the codebook of a national research network.
+          The editor handles 500+ variables across 20 questionnaires with instrument matching, family-aware
+          bulk updates, cross-row propagation, and copyright filtering. The public viewer lets researchers
+          browse, search, and export — no install, no login, no patient data exposed.
+        </p>
+        <div class="tags" style="margin-bottom:14px">
+          <span class="tag key">HTML / JS</span>
+          <span class="tag">Supabase</span>
+          <span class="tag">FAIR export</span>
+          <span class="tag">AES-256 encryption</span>
+          <span class="tag">Bilingual UI</span>
+        </div>
+        <div class="links">
+          <a href="https://hajarhn.github.io/codebook-viewer/">Live preview</a>
+          <a href="https://github.com/Hajarhn">Source</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- other software -->
+  <section class="ruled">
+    <div class="sec-head"><span class="idx">more</span><h2>Other <em>things I've built</em></h2></div>
+    <div class="work">
+
+      <a class="item reveal" href="#">
+        <div class="ttl">castor-codebook · Python package</div>
+        <div class="meta">Research software</div>
+        <div class="desc">A properly engineered Python package for parsing research codebooks — typed models, a command-line interface, fixture-based tests, and continuous integration. A study in doing research software the rigorous way.</div>
+        <div class="tags">
+          <span class="tag key">Python</span>
+          <span class="tag">CLI</span>
+          <span class="tag">GitHub Actions CI</span>
+          <span class="tag">Zenodo DOI</span>
+        </div>
+        <div class="arrow">↗</div>
+      </a>
+
+      <a class="item reveal" href="https://github.com/Hajarhn">
+        <div class="ttl">Cross-platform mobile apps</div>
+        <div class="meta">Flutter · Android</div>
+        <div class="desc">I design and ship mobile apps end to end in Flutter and Dart — including a bilingual (Persian &amp; English) puzzle app with full right-to-left support and a focus-timer app with local storage and charts.</div>
+        <div class="tags">
+          <span class="tag key">Flutter / Dart</span>
+          <span class="tag">RTL / bilingual</span>
+          <span class="tag">Riverpod</span>
+          <span class="tag">Local-first</span>
+        </div>
+        <div class="arrow">↗</div>
+      </a>
+
+    </div>
+  </section>
+
+  <section class="contact">
+    <div class="eyebrow">Get in touch</div>
+    <h2>Something to <em>build</em>?</h2>
+    <a class="email" href="mailto:hajar.hasannejad@gmail.com">hajar.hasannejad@gmail.com</a>
+    <div class="more">
+      <a href="index.html">← back home</a>
+      <a href="https://github.com/Hajarhn">GitHub</a>
+      <a href="https://www.linkedin.com/in/hajar-hasannejadasl/">LinkedIn</a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 · Hajar Hasannejadasl</span>
+    <span>Maastricht, NL · built by hand</span>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>
