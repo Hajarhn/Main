@@ -1,6 +1,7 @@
-// "Converging flow" — scattered, varied particles enter from the left,
-// gradually harmonise (size, colour, alignment) and are absorbed into
-// one ordered structure on the right. Calm, quiet, endless.
+// "Journey flow" — the whole path in one motion.
+// Particles enter as little CODE chips (software), morph into DATA points
+// drifting around a faint fitted curve (data science), then harmonise and
+// converge into one shared node (interoperability). Endless, calm.
 (function () {
   var canvas = document.getElementById('flow');
   if (!canvas) return;
@@ -9,9 +10,8 @@
   var ctx = canvas.getContext('2d');
   var W = 0, H = 0, dpr = Math.max(1, window.devicePixelRatio || 1);
 
-  // palette
-  var PETROL = '#0E5F66', DEEP = '#0A464C', PALE = '#9DC4C0', BRIGHT = '#12808A';
-  var MESSY = ['#0E5F66', '#12808A', '#9DC4C0', '#0A464C', '#5E8F8B', '#2E7A74'];
+  var PETROL = '#0E5F66', DEEP = '#0A464C', BRIGHT = '#12808A', PALE = '#9DC4C0';
+  var CODES = ['#0E5F66', '#12808A', '#2E7A74', '#0A464C'];
 
   function resize() {
     var r = canvas.getBoundingClientRect();
@@ -22,10 +22,9 @@
   resize();
   window.addEventListener('resize', resize);
 
-  // target: ordered hex node on the right
-  function targetX() { return W * 0.86; }
-  function targetY() { return H * 0.5; }
-  var HEXR = 26;
+  function tx() { return W * 0.9; }
+  function ty() { return H * 0.5; }
+  var HEXR = 22;
 
   function hexPath(cx, cy, r) {
     ctx.beginPath();
@@ -36,114 +35,145 @@
     }
     ctx.closePath();
   }
+  function rrect(x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.arcTo(x + w, y, x + w, y + h, r);
+    ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r);
+    ctx.arcTo(x, y, x + w, y, r);
+    ctx.closePath();
+  }
 
-  // particles
-  var N = 46, parts = [];
+  function midCurveY(u) { // faint fitted curve across middle zone
+    return ty() + Math.sin(u * Math.PI * 1.15 + 0.3) * H * 0.16 - H * 0.04;
+  }
+
+  var N = 40, parts = [];
   function spawn(p, initial) {
-    p.t = initial ? Math.random() : 0;              // progress 0..1
-    p.speed = 0.0016 + Math.random() * 0.0014;
-    p.lane = (Math.random() * 2 - 1);               // -1..1 vertical spread
-    p.wob = Math.random() * Math.PI * 2;            // wobble phase
-    p.wobAmp = 8 + Math.random() * 22;              // messy wobble amplitude
-    p.size0 = 2.5 + Math.random() * 5.5;            // messy size
-    p.shape = Math.random() < 0.35 ? 'rect' : (Math.random() < 0.5 ? 'tri' : 'dot');
-    p.col = MESSY[(Math.random() * MESSY.length) | 0];
-    p.rot = Math.random() * Math.PI;
+    p.t = initial ? Math.random() : 0;
+    p.speed = 0.0015 + Math.random() * 0.0012;
+    p.lane = (Math.random() * 2 - 1);
+    p.wob = Math.random() * Math.PI * 2;
+    p.size0 = 5 + Math.random() * 5;
+    p.col = CODES[(Math.random() * CODES.length) | 0];
+    p.lines = 2 + ((Math.random() * 2) | 0);
     return p;
   }
   for (var i = 0; i < N; i++) parts.push(spawn({}, true));
 
-  var pulse = 0; // hex pulse on absorption
-
+  var pulse = 0;
   function ease(t) { return t * t * (3 - 2 * t); }
+  function lerp(a, b, t) { return a + (b - a) * t; }
+
+  var Z1 = 0.34, Z2 = 0.7;
 
   function draw(now) {
     ctx.clearRect(0, 0, W, H);
+    var TX = tx(), TY = ty();
 
-    var tx = targetX(), ty = targetY();
+    // faint fitted curve (middle zone)
+    ctx.strokeStyle = 'rgba(14,95,102,0.14)';
+    ctx.lineWidth = 1.6;
+    ctx.beginPath();
+    var mx0 = W * Z1, mx1 = W * Z2;
+    for (var s = 0; s <= 40; s++) {
+      var u = s / 40;
+      var x = lerp(mx0, mx1, u);
+      s ? ctx.lineTo(x, midCurveY(u)) : ctx.moveTo(x, midCurveY(u));
+    }
+    ctx.stroke();
 
-    // faint guide lines converging to the node
+    // convergence guides (last zone)
     ctx.strokeStyle = 'rgba(14,95,102,0.07)';
     ctx.lineWidth = 1;
-    for (var g = -2; g <= 2; g++) {
+    for (var g = -1; g <= 1; g++) {
       ctx.beginPath();
-      ctx.moveTo(-10, ty + g * H * 0.19);
-      ctx.bezierCurveTo(W * 0.4, ty + g * H * 0.19, W * 0.62, ty + g * 6, tx - HEXR - 6, ty + g * 4);
+      ctx.moveTo(mx1, TY + g * H * 0.2);
+      ctx.bezierCurveTo(lerp(mx1, TX, 0.5), TY + g * H * 0.2, lerp(mx1, TX, 0.7), TY + g * 5, TX - HEXR - 4, TY + g * 3);
       ctx.stroke();
     }
 
-    // particles
+    // subtle zone separators
+    ctx.strokeStyle = 'rgba(19,35,32,0.05)';
+    [Z1, Z2].forEach(function (z) {
+      ctx.beginPath(); ctx.moveTo(W * z, 14); ctx.lineTo(W * z, H - 14); ctx.stroke();
+    });
+
     for (var i = 0; i < parts.length; i++) {
       var p = parts[i];
       p.t += p.speed;
       if (p.t >= 1) { pulse = 1; spawn(p, false); continue; }
+      var t = p.t, e = ease(t);
+      var x = -14 + (TX - HEXR + 14) * e;
+      var alpha = 0.3 + 0.7 * Math.min(1, t * 5);
+      var y;
 
-      var e = ease(p.t);
-      // path: from left edge, lane spread collapses toward target
-      var x = -12 + (tx - HEXR - 2 + 12) * e;
-      var spread = (1 - e) * (1 - e);                 // collapses fast near the end
-      var y = ty + p.lane * H * 0.42 * spread
-            + Math.sin(p.wob + now * 0.0012 + p.t * 6) * p.wobAmp * spread;
-
-      // harmonisation: size, colour, shape settle as e grows
-      var size = p.size0 * (1 - e) + 3.2 * e;
-      var settle = e > 0.72 ? (e - 0.72) / 0.28 : 0;  // final blend to petrol
-      ctx.globalAlpha = 0.25 + 0.75 * Math.min(1, p.t * 4) * (1 - settle * 0.15);
-
-      ctx.save();
-      ctx.translate(x, y);
-      ctx.fillStyle = settle > 0 ? PETROL : p.col;
-      if (p.shape === 'dot' || settle > 0.4) {
-        ctx.beginPath(); ctx.arc(0, 0, size, 0, Math.PI * 2); ctx.fill();
-      } else if (p.shape === 'rect') {
-        ctx.rotate(p.rot * (1 - e));
-        ctx.fillRect(-size, -size, size * 2, size * 2);
+      if (t < Z1) {
+        // ZONE 1 — code chips drifting in loose rows
+        y = TY + p.lane * H * 0.34 + Math.sin(p.wob + now * 0.001) * 6;
+        ctx.globalAlpha = alpha;
+        ctx.fillStyle = p.col;
+        var s1 = p.size0;
+        rrect(x - s1, y - s1 * 0.7, s1 * 2, s1 * 1.4, 3);
+        ctx.fill();
+        ctx.fillStyle = 'rgba(255,255,255,0.55)';
+        for (var L = 0; L < p.lines; L++) {
+          var lw = s1 * (1.4 - L * 0.35);
+          ctx.fillRect(x - s1 + 3, y - s1 * 0.7 + 3 + L * 4, Math.max(3, lw), 1.6);
+        }
+      } else if (t < Z2) {
+        // ZONE 2 — morph to data points, gravitate to the fitted curve
+        var u2 = (t - Z1) / (Z2 - Z1);
+        var attract = ease(Math.min(1, u2 * 1.4));
+        var freeY = TY + p.lane * H * 0.3 + Math.sin(p.wob + now * 0.0012 + t * 8) * 10;
+        var cY = midCurveY(u2) + Math.sin(p.wob * 3.1) * 14 * (1 - attract * 0.6);
+        y = lerp(freeY, cY, attract);
+        var morph = ease(Math.min(1, (t - Z1) / 0.08));
+        ctx.globalAlpha = alpha;
+        if (morph < 0.99) {
+          var sz = lerp(p.size0, 3.6, morph);
+          ctx.fillStyle = p.col;
+          rrect(x - sz, y - sz * lerp(0.7, 1, morph), sz * 2, sz * 2 * lerp(0.7, 1, morph), lerp(3, sz, morph));
+          ctx.fill();
+        } else {
+          ctx.fillStyle = DEEP;
+          ctx.beginPath(); ctx.arc(x, y, 3.4, 0, Math.PI * 2); ctx.fill();
+        }
       } else {
-        ctx.rotate(p.rot * (1 - e));
-        ctx.beginPath();
-        ctx.moveTo(0, -size); ctx.lineTo(size, size); ctx.lineTo(-size, size);
-        ctx.closePath(); ctx.fill();
+        // ZONE 3 — harmonise & converge
+        var v = ease((t - Z2) / (1 - Z2));
+        var startY = midCurveY(1) + Math.sin(p.wob * 3.1) * 6;
+        y = lerp(startY, TY, v);
+        ctx.globalAlpha = alpha;
+        ctx.fillStyle = PETROL;
+        ctx.beginPath(); ctx.arc(x, y, lerp(3.4, 2.8, v), 0, Math.PI * 2); ctx.fill();
       }
-      ctx.restore();
     }
     ctx.globalAlpha = 1;
 
-    // ordered structure: hex node + small satellite lattice
+    // shared node
     pulse *= 0.94;
-    var pr = HEXR + pulse * 5;
-    // soft halo
+    var pr = HEXR + pulse * 4;
     ctx.fillStyle = 'rgba(14,95,102,' + (0.06 + pulse * 0.08) + ')';
-    ctx.beginPath(); ctx.arc(tx, ty, pr + 16, 0, Math.PI * 2); ctx.fill();
-    // satellites: a tidy ring of small dots (the "organised" version of the chaos)
-    for (var s = 0; s < 6; s++) {
-      var a = Math.PI / 3 * s;
-      var sx = tx + Math.cos(a) * (pr + 26), sy = ty + Math.sin(a) * (pr + 26);
+    ctx.beginPath(); ctx.arc(TX, TY, pr + 14, 0, Math.PI * 2); ctx.fill();
+    for (var q = 0; q < 6; q++) {
+      var a2 = Math.PI / 3 * q;
+      var sx = TX + Math.cos(a2) * (pr + 22), sy = TY + Math.sin(a2) * (pr + 22);
       ctx.fillStyle = PALE;
-      ctx.beginPath(); ctx.arc(sx, sy, 3.2, 0, Math.PI * 2); ctx.fill();
+      ctx.beginPath(); ctx.arc(sx, sy, 2.8, 0, Math.PI * 2); ctx.fill();
       ctx.strokeStyle = 'rgba(14,95,102,0.25)';
-      ctx.beginPath(); ctx.moveTo(tx + Math.cos(a) * pr, ty + Math.sin(a) * pr);
-      ctx.lineTo(sx, sy); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(TX + Math.cos(a2) * pr, TY + Math.sin(a2) * pr); ctx.lineTo(sx, sy); ctx.stroke();
     }
-    // hexagon
-    hexPath(tx, ty, pr);
-    ctx.fillStyle = DEEP;
-    ctx.fill();
-    hexPath(tx, ty, pr * 0.62);
-    ctx.strokeStyle = BRIGHT; ctx.lineWidth = 1.5; ctx.stroke();
+    hexPath(TX, TY, pr); ctx.fillStyle = DEEP; ctx.fill();
+    hexPath(TX, TY, pr * 0.6); ctx.strokeStyle = BRIGHT; ctx.lineWidth = 1.4; ctx.stroke();
   }
 
-  if (reduced) {
-    // static end-state: tidy dots row + node
-    resize();
-    draw(0);
-    return;
-  }
+  if (reduced) { draw(0); return; }
 
   var running = true, raf;
   function loop(now) { if (running) { draw(now); raf = requestAnimationFrame(loop); } }
   raf = requestAnimationFrame(loop);
-
-  // pause when off-screen
   if ('IntersectionObserver' in window) {
     new IntersectionObserver(function (es) {
       es.forEach(function (e) {
