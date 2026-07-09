@@ -90,7 +90,7 @@ header.top{
 .journey{position:relative;padding-left:44px;max-width:640px}
 .jline{position:absolute;left:9px;top:6px;bottom:6px;width:2px;background:var(--line);border-radius:2px}
 .jline-fill{position:absolute;left:0;top:0;width:100%;height:0;background:var(--petrol);border-radius:2px;transition:height .15s linear}
-.stop{position:relative;padding:0 0 72px}
+.stop{position:relative;padding:0 0 96px}
 .stop:last-child{padding-bottom:8px}
 .stop::before{
   content:"";position:absolute;left:-41px;top:6px;width:12px;height:12px;border-radius:50%;

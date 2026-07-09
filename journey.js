@@ -16,8 +16,8 @@
   function update() {
     var r = jr.getBoundingClientRect();
     var vh = window.innerHeight;
-    // progress: 0 when journey top hits 80% of viewport, 1 when bottom hits 45%
-    var start = vh * 0.8, end = vh * 0.45;
+    // progress: 0 when journey top hits 62% of viewport, 1 when bottom hits 38%
+    var start = vh * 0.62, end = vh * 0.38;
     var total = r.height - (start - end);
     var passed = start - r.top;
     var prog = Math.max(0, Math.min(1, passed / total));
